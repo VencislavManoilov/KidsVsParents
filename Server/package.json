@@ -1,0 +1,15 @@
+{
+  "name": "kidsvsparentsbackend",
+  "version": "1.0.0",
+  "description": "This is the back end for the game!",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "Ventsislav Manoilov",
+  "license": "ISC",
+  "dependencies": {
+    "ws": "^8.16.0"
+  }
+}
