@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using WebSocketSharp;
+using Newtonsoft.Json;
 
 public class server : MonoBehaviour
 {
