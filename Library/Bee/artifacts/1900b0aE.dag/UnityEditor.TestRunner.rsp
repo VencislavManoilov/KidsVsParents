@@ -499,7 +499,7 @@
 "Library/PackageCache/com.unity.test-framework@1.1.33/UnityEditor.TestRunner/UnityTestProtocol/UtpMessageReporter.cs"
 -langversion:9.0
 
-/deterministic
+
 /optimize+
 /debug:portable
 /nologo

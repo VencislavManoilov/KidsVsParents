@@ -431,7 +431,7 @@
 "Library/PackageCache/com.unity.ugui@1.0.0/Runtime/UI/Core/VertexModifiers/Shadow.cs"
 -langversion:9.0
 
-/deterministic
+
 /optimize+
 /debug:portable
 /nologo

@@ -638,7 +638,7 @@
 "Library/PackageCache/com.unity.collab-proxy@2.2.0/Editor/PlasticSCM/WorkspaceWindow.cs"
 -langversion:9.0
 
-/deterministic
+
 /optimize+
 /debug:portable
 /nologo

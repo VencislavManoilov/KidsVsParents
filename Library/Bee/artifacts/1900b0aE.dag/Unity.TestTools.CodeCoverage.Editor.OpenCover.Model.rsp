@@ -363,7 +363,7 @@
 "Library/PackageCache/com.unity.testtools.codecoverage@1.2.4/Editor/CoverageFormats/OpenCover/Model/TrackedMethod.cs"
 -langversion:9.0
 
-/deterministic
+
 /optimize+
 /debug:portable
 /nologo

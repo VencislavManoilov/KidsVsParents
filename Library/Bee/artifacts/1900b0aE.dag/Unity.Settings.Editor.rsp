@@ -361,7 +361,7 @@
 "Library/PackageCache/com.unity.settings-manager@2.0.1/Editor/ValueWrapper.cs"
 -langversion:9.0
 
-/deterministic
+
 /optimize+
 /debug:portable
 /nologo

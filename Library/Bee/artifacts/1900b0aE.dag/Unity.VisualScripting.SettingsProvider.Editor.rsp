@@ -363,7 +363,7 @@
 "Library/PackageCache/com.unity.visualscripting@1.9.1/Editor/SettingsProvider/ProjectSettingsProviderView.cs"
 -langversion:9.0
 
-/deterministic
+
 /optimize+
 /debug:portable
 /nologo

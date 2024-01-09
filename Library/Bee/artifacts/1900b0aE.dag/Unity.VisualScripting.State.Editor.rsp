@@ -421,7 +421,7 @@
 "Library/PackageCache/com.unity.visualscripting@1.9.1/Editor/VisualScripting.State/Transitions/TriggerStateTransitionWidget.cs"
 -langversion:9.0
 
-/deterministic
+
 /optimize+
 /debug:portable
 /nologo

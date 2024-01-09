@@ -381,7 +381,7 @@
 "Library/PackageCache/com.unity.performance.profile-analyzer@1.2.2/Editor/Units.cs"
 -langversion:9.0
 
-/deterministic
+
 /optimize+
 /debug:portable
 /nologo

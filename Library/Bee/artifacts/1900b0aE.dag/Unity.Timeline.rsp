@@ -417,7 +417,7 @@
 "Library/PackageCache/com.unity.timeline@1.7.6/Runtime/Utilities/WeightUtility.cs"
 -langversion:9.0
 
-/deterministic
+
 /optimize+
 /debug:portable
 /nologo
