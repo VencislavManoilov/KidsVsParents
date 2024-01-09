@@ -1,13 +1,15 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using WebSocketSharp;
 
 public class server : MonoBehaviour
 {
+
     private WebSocket ws;
 
     void Start()
     {
-        // Replace "ws://your-server-address" with your WebSocket server address
         ws = new WebSocket("ws://localhost:3000");
 
         ws.OnMessage += (sender, e) =>
@@ -25,7 +27,7 @@ public class server : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             // Replace "Hello WebSocket!" with your message
-            ws.Send("Hello WebSocket!");
+            ws.Send("Hello from Unity");
         }
     }
 
