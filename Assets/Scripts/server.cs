@@ -1,3 +1,5 @@
+using System;
+using System.Dynamic;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,6 +8,10 @@ using Newtonsoft.Json;
 
 public class server : MonoBehaviour
 {
+    public GameObject player;
+    private GameObject[] players;
+
+    public GameObject playerPrefab;
 
     private WebSocket ws;
 
@@ -15,8 +21,22 @@ public class server : MonoBehaviour
 
         ws.OnMessage += (sender, e) =>
         {
-            Debug.Log("Received: " + e.Data);
-            // Handle the received message here
+            dynamic data = JsonConvert.DeserializeObject<ExpandoObject>(e.Data);
+            // The program doesn't go here for some reason
+            if(data.myPos) {
+                // player.transform.position = new Vector3(data.myPos[0], data.myPos[1], data.myPos[2]);
+                player.transform.position = new Vector3(2, 3, 4);
+            }
+
+            if(data.clientsPositions) {
+                foreach(GameObject player in players) {
+                    Destroy(player);
+                }
+
+                foreach(Vector3 position in data.clientsPositions) {
+                    players[players.Length] = Instantiate(playerPrefab, position, playerPrefab.transform.rotation);
+                }
+            }
         };
 
         ws.Connect();
