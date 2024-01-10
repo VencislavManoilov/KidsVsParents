@@ -1,7 +1,4 @@
-using System;
 using System.Dynamic;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using WebSocketSharp;
 using Newtonsoft.Json;
@@ -15,40 +12,40 @@ public class server : MonoBehaviour
 
     private WebSocket ws;
 
-    void Start()
+    private void Start()
     {
         ws = new WebSocket("ws://localhost:3000");
+        players = new GameObject[4];
 
-        ws.OnMessage += (sender, e) =>
-        {
-            dynamic data = JsonConvert.DeserializeObject<ExpandoObject>(e.Data);
-            // The program doesn't go here for some reason
-            if(data.myPos) {
-                // player.transform.position = new Vector3(data.myPos[0], data.myPos[1], data.myPos[2]);
-                player.transform.position = new Vector3(2, 3, 4);
-            }
+        ws.OnMessage += HandleWebSocketMessage;
 
-            if(data.clientsPositions) {
-                foreach(GameObject player in players) {
-                    Destroy(player);
-                }
-
-                foreach(Vector3 position in data.clientsPositions) {
-                    players[players.Length] = Instantiate(playerPrefab, position, playerPrefab.transform.rotation);
-                }
-            }
-        };
 
         ws.Connect();
     }
 
-    void Update()
-    {
-        // You can send messages in the Update method or as needed
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            // Replace "Hello WebSocket!" with your message
-            ws.Send("Hello from Unity");
+    private void HandleWebSocketMessage(object sender, MessageEventArgs e) {
+        dynamic data = JsonConvert.DeserializeObject<ExpandoObject>(e.Data);
+
+        UpdateMyPosition(data.myPos);
+        UpdatePlayerPositions(data.clientsPositions);
+    }
+
+    private void UpdateMyPosition(dynamic positionData) {
+        if(positionData != null && positionData.Count == 3) {
+            player.transform.position = new Vector3(positionData[0], positionData[1], positionData[2]);
+        }
+    }
+
+    private void UpdatePlayerPositions(dynamic playersPos) {
+        if(playersPos != null && players != null && playersPos.clientsPositions != null) {
+            if (players.Length < playersPos.clientsPositions.Length) {
+                players = new GameObject[playersPos.clientsPositions.Length];
+            }
+
+            for (int i = 0; i < playersPos.clientsPositions.Length; i++) {
+                Vector3 position = playersPos.clientsPositions[i];
+                players[i] = Instantiate(playerPrefab, position, playerPrefab.transform.rotation);
+            }
         }
     }
 

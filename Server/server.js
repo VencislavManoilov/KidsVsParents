@@ -33,11 +33,14 @@ server.on('connection', (websocket) => {
 function updatePosition() {
     server.clients.forEach((client) => {
         if (client.readyState === WebSocket.OPEN) {
-            const otherClientsPositions = players.filter(pos => pos.clientId !== client._socket.remoteAddress);
+            const otherClientsPositions = players
+                .filter(pos => pos.clientId !== client._socket.remoteAddress)
+                .map(pos => pos.position);
             client.send(JSON.stringify({ clientsPositions: otherClientsPositions }));
         }
     });
 }
+
 
 setInterval(updatePosition, 1000);
 
