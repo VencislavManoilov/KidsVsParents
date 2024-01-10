@@ -1,7 +1,9 @@
+using System;
 using System.Dynamic;
 using UnityEngine;
 using WebSocketSharp;
 using Newtonsoft.Json;
+using System.Collections.Generic;
 
 public class server : MonoBehaviour
 {
@@ -9,6 +11,12 @@ public class server : MonoBehaviour
     private GameObject[] players;
 
     public GameObject playerPrefab;
+
+    private float x1;
+    private float y1;
+    private float z1;
+
+    private bool spawn = false;
 
     private WebSocket ws;
 
@@ -23,20 +31,26 @@ public class server : MonoBehaviour
         ws.Connect();
     }
 
-    private void HandleWebSocketMessage(object sender, MessageEventArgs e) {
+    void HandleWebSocketMessage(object sender, MessageEventArgs e) {
         dynamic data = JsonConvert.DeserializeObject<ExpandoObject>(e.Data);
 
+        UpdatePlayersPositions(data.clientsPositions);
         UpdateMyPosition(data.myPos);
-        UpdatePlayerPositions(data.clientsPositions);
+        Debug.Log(data.clientsPositions);
     }
 
-    private void UpdateMyPosition(dynamic positionData) {
+    void UpdateMyPosition(dynamic positionData) {
         if(positionData != null && positionData.Count == 3) {
-            player.transform.position = new Vector3(positionData[0], positionData[1], positionData[2]);
+            x1 = positionData[0];
+            y1 = positionData[1];
+            z1 = positionData[2];
+            spawn = true;
         }
     }
 
-    private void UpdatePlayerPositions(dynamic playersPos) {
+    // THIS FUNCTION NEVER RUNS!!!!
+    // FIX FIX FIX
+    void UpdatePlayersPositions(dynamic playersPos) {
         if(playersPos != null && players != null && playersPos.clientsPositions != null) {
             if (players.Length < playersPos.clientsPositions.Length) {
                 players = new GameObject[playersPos.clientsPositions.Length];
@@ -51,11 +65,17 @@ public class server : MonoBehaviour
 
     private void OnDestroy()
     {
-        // Make sure to close the WebSocket connection when the script is destroyed
         if (ws != null && ws.IsAlive)
         {
             Debug.Log("Bye WebSocket!");
             ws.Close();
+        }
+    }
+
+    void Update() {
+        if(spawn) {
+            player.transform.position = new Vector3(x1, y1, z1);
+            spawn = false;
         }
     }
 }

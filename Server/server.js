@@ -1,13 +1,15 @@
 const WebSocket = require('ws');
+const uniqid = require('uniqid');
 
 const server = new WebSocket.Server({ port: 3000 });
 
 let players = []
 
 server.on('connection', (websocket) => {
+    websocket.id = uniqid();
     console.log('Client connected');
-    websocket.position = [x = randomInteger(-10, 10), y = randomInteger(-10, 10), z = randomInteger(-10, 10)];
-    players.push({ clientId: websocket._socket.remoteAddress, position: websocket.position });
+    websocket.position = [x = randomInteger(0, 20) - 10, y = randomInteger(0, 20) - 10, z = randomInteger(0, 20) - 10];
+    players.push({ clientId: websocket.id, position: websocket.position });
     websocket.send(JSON.stringify({ myPos: websocket.position }));
 
     // Listen for messages from the client
@@ -17,32 +19,29 @@ server.on('connection', (websocket) => {
 
     // Handle disconnection
     websocket.on('close', () => {
-        removeClient(websocket._socket.remoteAddress);
+        removeClient(websocket.id);
         console.log('Client disconnected');
     });
 });
 
-// function updatePosition() {
-//     server.clients.forEach((client) => {
-//         if (client.readyState === WebSocket.OPEN) {
-//             client.send(/* Here I want to send stringified object that has one variable that is an array of all clients positions exept the current client. */);
-//         }
-//     });
-// }
-
 function updatePosition() {
-    server.clients.forEach((client) => {
-        if (client.readyState === WebSocket.OPEN) {
-            const otherClientsPositions = players
-                .filter(pos => pos.clientId !== client._socket.remoteAddress)
-                .map(pos => pos.position);
-            client.send(JSON.stringify({ clientsPositions: otherClientsPositions }));
-        }
-    });
+    // console.log(server.clients);
+    if(server.clients.size > 0) {
+        server.clients.forEach((client) => {
+            if (client.readyState === WebSocket.OPEN) {
+                const otherClientsPositions = players
+                    .filter(pos => pos.clientId !== client.id)
+                    .map(pos => pos.position);
+                console.log("My position: " + players.filter(pos => pos.clientId === client.id).map(pos => pos.position) + "; Others position: " + otherClientsPositions);
+                // console.log(otherClientsPositions);
+                client.send(JSON.stringify({ clientsPositions: otherClientsPositions }));
+            }
+        });
+    }
 }
 
 
-setInterval(updatePosition, 1000);
+setInterval(updatePosition, 5000);
 
 console.log('WebSocket server started at ws://localhost:3000');
 

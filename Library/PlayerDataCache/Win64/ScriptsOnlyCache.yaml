@@ -41,7 +41,7 @@ ScriptsOnlyBuild:
     - Class: 108
       Script: {instanceID: 0}
     - Class: 114
-      Script: {instanceID: 7892}
+      Script: {instanceID: 7808}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 157
@@ -861,6 +861,12 @@ ScriptsOnlyBuild:
     className: TouchInputModule
   - hash:
       serializedVersion: 2
+      Hash: 80f8d9b40f071ff048c5ad6ccf317b15
+    assemblyName: Assembly-CSharp
+    namespaceName: 
+    className: server
+  - hash:
+      serializedVersion: 2
       Hash: 00eef92bf387da2c9009267123d9d674
     assemblyName: Unity.VisualScripting.Core
     namespaceName: Unity.VisualScripting
@@ -871,12 +877,6 @@ ScriptsOnlyBuild:
     assemblyName: Unity.VisualScripting.Core
     namespaceName: Unity.VisualScripting
     className: UnityOnSliderValueChangedMessageListener
-  - hash:
-      serializedVersion: 2
-      Hash: 80f8d9b40f071ff048c5ad6ccf317b15
-    assemblyName: Assembly-CSharp
-    namespaceName: 
-    className: server
   platform: 19
   scenePathNames:
   - Assets/Scenes/SampleScene.unity
