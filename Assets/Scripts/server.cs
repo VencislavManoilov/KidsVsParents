@@ -1,9 +1,7 @@
-using System;
 using System.Dynamic;
 using UnityEngine;
 using WebSocketSharp;
 using Newtonsoft.Json;
-using System.Collections.Generic;
 
 public class server : MonoBehaviour
 {
